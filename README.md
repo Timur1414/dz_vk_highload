@@ -30,13 +30,35 @@ Spotify достаточно сложная система:
 - Tencent Music - китайский сервис, который занимает долю в 13.8%.
 - Apple Music - сервис от Apple, который занимает долю в 12.6%.
 - YouTube Music - самый быстрорастущий сервис, который пока что занимает долю в 12.4%.
+- Amazon Music - замыкает пятёрку лидеров с долей в 8.5%.
+- Яндекс Музыка - российский сервис, который занимает примерно 3.4%.
 Главным конкурентов для Spotify является YouTube Music [4]. Темпы роста YouTube Music почти в два раза превышают темпы роста Spotify.
 ## 1.3. Целевая аудитория
 Общее количество активных пользователей в месяц составляет 761 млн. по всему миру. Из них число премиум пользователей составляет 293 млн. (информация на первый квартал 2026 года) [2]. Большая часть слушателей находится в Европе - 26% от общего числа месячных активных пользователей. Также регион Европы является самым большим по количеству премиум подписок. Точного значения ежедневной активной аудитории компания не предоставляет, но если оценить, что в день сервисом пользуется примерно 20-30% от MAU, то ежедневная активная аудитория составляет примерно 230 млн. пользователей [6]. 
 ## 1.4. Функционал
--- полный функционал --
+Полный функционал сервиса включает в себя:
+- потоковое воспроизведение аудио с адаптивным битрейтом
+- авторизация и управление профилем
+- добавление треков в собственную библиотеку
+- бесшовное воспроизведение альбомов
+- плавный переход между треками
+- поиск по трекам, композиторам, альбомам и плейлистам
+- оффлайн режим
+- синхронизация между устройствами
+- персонализированные рекомендации
+- общие плейлисты
+- прослушивание подкастов
+- отображение синхронизированных текстов песен
+- Spotify Connect — управление воспроизведением между устройствами
+- AI Playlist — создание плейлистов по текстовому описанию [7]
 
--- mvp --
+В MVP будет входить следующий функционал:
+- авторизация и управление профилем
+- потоковое воспроизведение аудио
+- добавление треков в собственную библиотеку
+- поиск по трекам, композиторам, альбомам и плейлистам
+- персонализированные рекомендации
+- отображение синхронизированных текстов песен
 # Источники
 1. Анализ Spotify (SPOT). URL: [https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528](https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528)
 2. Spotify has 293 million premium subscribers. URL: [https://www.heise.de/en/news/Spotify-has-293-million-premium-subscribers-11275204.html?wt_mc=sm.red.ho.mastodon.mastodon.md_beitraege.md_beitraege&utm_source=mastodon#1](https://www.heise.de/en/news/Spotify-has-293-million-premium-subscribers-11275204.html?wt_mc=sm.red.ho.mastodon.mastodon.md_beitraege.md_beitraege&utm_source=mastodon#1)
@@ -44,3 +66,4 @@ Spotify достаточно сложная система:
 4. Music subscriber market shares Q4 2025: The chess board is set. URL: [https://www.midiaresearch.com/blog/music-subscriber-market-shares-q4-2025-the-chess-board-is-set](https://www.midiaresearch.com/blog/music-subscriber-market-shares-q4-2025-the-chess-board-is-set)
 5. Spotify’s Love/Hate Relationship with DNS. URL: [https://engineering.atspotify.com/2017/03/spotifys-love-hate-relationship-with-dns](https://engineering.atspotify.com/2017/03/spotifys-love-hate-relationship-with-dns)
 6. Daily Active Users - Approximation. URL: [https://nitinkc.github.io/system%20design/DAU/](https://nitinkc.github.io/system%20design/DAU/)
+7. 25 Ways Spotify Leveled Up Your Listening in 2025. URL: [https://newsroom.spotify.com/2025-12-29/year-in-features/](https://newsroom.spotify.com/2025-12-29/year-in-features/)
