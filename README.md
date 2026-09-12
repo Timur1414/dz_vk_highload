@@ -87,7 +87,21 @@ Spotify достаточно сложная система:
 ## 2.2. Технические метрики
 |Данные|Размер|
 |------|------|
-|||
+|Аудио||
+|Метаданные||
+|Плейлисты||
+|Обложки треков||
+|Задержка (воспроизведение)||
+|Задержка (API)||
+|История прослушивания||
+|API запросы||
+|Аудио стриминг||
+|Прослушивание RPS|Средний: <br>Пиковый:|
+|Поиск RPS||
+|Загрузка плейлиста RPS||
+|Лайки RPS||
+|Рекомендации RPS||
+|Авторизация RPS||
 # Источники
 1. Анализ Spotify (SPOT). URL: [https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528](https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528)
 2. Spotify has 293 million premium subscribers. URL: [https://www.heise.de/en/news/Spotify-has-293-million-premium-subscribers-11275204.html?wt_mc=sm.red.ho.mastodon.mastodon.md_beitraege.md_beitraege&utm_source=mastodon#1](https://www.heise.de/en/news/Spotify-has-293-million-premium-subscribers-11275204.html?wt_mc=sm.red.ho.mastodon.mastodon.md_beitraege.md_beitraege&utm_source=mastodon#1)
