@@ -74,16 +74,16 @@ Spotify достаточно сложная система:
 ## 2.1. Продуктовые метрики
 |Метрики|Значение|
 |-------|--------|
-|MAU    |761 млн.|
-|DAU    |230 млн.|
-|Премиум пользователи||
-|Время прослушивания||
-|Количество треков||
-|Объём аудио|Всего: <br>На пользователя:|
-|Потребление данных|Обычное качество: <br>Высокое качество: |
-|Прослушивание треков||
-|Лайков в день||
-|Поиск||
+|MAU    |761 млн. [2]|
+|DAU    |230 млн. [6]|
+|Премиум пользователи|293 млн. [2]|
+|Время прослушивания (на пользователя)|148 мин/день [9]|
+|Количество треков|86 млн. [10]|
+|Объём аудио|Всего: 300 ТБ [10]|
+|Потребление данных (битрейт)|Обычное качество: 96 kbps<br>Высокое качество: 160 kbps [11]|
+|Прослушивание треков|23 млрд. в день [12]|
+|Лайков в день|3 в день (на пользователя) [13]|
+|Поиск|3 в день (на пользователя) [13]|
 ## 2.2. Технические метрики
 |Данные|Размер|
 |------|------|
@@ -111,3 +111,8 @@ Spotify достаточно сложная система:
 6. Daily Active Users - Approximation. URL: [https://nitinkc.github.io/system%20design/DAU/](https://nitinkc.github.io/system%20design/DAU/)
 7. 25 Ways Spotify Leveled Up Your Listening in 2025. URL: [https://newsroom.spotify.com/2025-12-29/year-in-features/](https://newsroom.spotify.com/2025-12-29/year-in-features/)
 8. Spotify reveals when India tunes in: Gen Z and millennials shape daily music rituals. URL: [https://www.businesstoday.in/technology/news/story/spotify-reveals-when-india-tunes-in-gen-z-and-millennials-shape-daily-music-rituals-482131-2025-06-27?referral=yes&t_content=footerstrip-1&t_medium=web&t_psl=False&t_source=recengine#1](https://www.businesstoday.in/technology/news/story/spotify-reveals-when-india-tunes-in-gen-z-and-millennials-shape-daily-music-rituals-482131-2025-06-27?referral=yes&t_content=footerstrip-1&t_medium=web&t_psl=False&t_source=recengine#1)
+9. Spotify Statistics UK: 15.3M Subscribers, First Profit. URL: [https://songgifts.co.uk/blog/spotify-statistics/#sources_18](https://songgifts.co.uk/blog/spotify-statistics/#sources_18)
+10. Anna’s Archive releases massive 300TB Spotify music scrape. URL: [https://cyberinsider.com/annas-archive-releases-massive-300tb-spotify-music-scrape/#genesis-content#1](https://cyberinsider.com/annas-archive-releases-massive-300tb-spotify-music-scrape/#genesis-content#1)
+11. Spotify: Wie hoch ist der Datenverbrauch?. URL: [https://www.giga.de/tech/spotify-wie-hoch-ist-der-datenverbrauch--01J5QMXR2CW20T1F4R77CARQRN#doc-W7IJGiCPoL#1](https://www.giga.de/tech/spotify-wie-hoch-ist-der-datenverbrauch--01J5QMXR2CW20T1F4R77CARQRN#doc-W7IJGiCPoL#1)
+12. https://www.statspanda.com/live-counters/songs-streamed-on-spotify?source=counters_page. URL: [https://www.statspanda.com/live-counters/songs-streamed-on-spotify?source=counters_page](https://www.statspanda.com/live-counters/songs-streamed-on-spotify?source=counters_page)
+13. Проектирование высоконагруженной системы: Музыкальный стриминговый сервис Spotify. URL: [https://github.com/Revachol/vk_highload_spotify](https://github.com/Revachol/vk_highload_spotify)
