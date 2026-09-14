@@ -85,27 +85,27 @@ Spotify достаточно сложная система:
 |Количество операций лайков            |690 млн. в день [13]                                              |
 |Количество поисковых запросов         |690 млн. в день [13]                                              |
 ## 2.2. Технические метрики
-|Данные|Размер|
-|------|------|
-|Аудио общий объём (с учётом всех кодировок)|1 ПБ. [14]|
-|Метаданные|500 ТБ. [14]|
-|Плейлисты|500 ТБ. [14]|
-|Обложки треков|30 ТБ. [14]|
-|Задержка (воспроизведение)|200 мс. [15]|
-|Задержка обработки события воспроизведения|5 мс. [16]|
-|Задержка (API)|50 мс. [15]|
-|API запросы|11 млн. RPS [17]|
-|Пропускная способность общая|50 ГБ/с|
-|Прослушивание RPS|Средний: 145000 RPS<br>Пиковый: 450000 RPS|
-|Поиск RPS|Средний: 10000 RPS<br>Пиковый: 40000 RPS|
-|Загрузка плейлиста RPS|Средний: 25000 RPS<br>Пиковый: 100000 RPS|
-|Лайки RPS|Средний: 15000 RPS<br>Пиковый: 60000 RPS|
-|Рекомендации RPS|Средний: 15000 RPS<br>Пиковый: 50000 RPS|
-|Авторизация RPS|Средний: 500 RPS<br>Пиковый: 5000 RPS|
-|Аудио стриминг RPS|Средний: 580000 RPS<br>Пиковый: 2000000 RPS|
-|Cache Hit Rate (CDN)|90-95% [16]|
-|Доступность|99.999% [15]|
-|Кодеки|Ogg Vorbis и AAC|
+|Данные                                |Размер                                      |
+|--------------------------------------|--------------------------------------------|
+|Объём аудио (с учётом всех кодировок) |1 ПБ. [14]                                  |
+|Метаданные                            |500 ТБ. [14]                                |
+|Плейлисты                             |500 ТБ. [14]                                |
+|Обложки треков                        |30 ТБ. [14]                                 |
+|Задержка воспроизведения нового трека |200 мс. [15]                                |
+|Задержка обработки события паузы      |5 мс. [16]                                  |
+|Задержка API                          |50 мс. [15]                                 |
+|API запросы (всего)                   |11 млн. RPS [17]                            |
+|Общая пропускная способность          |50 ГБ/с                                     |
+|Прослушивания RPS                     |Средний: 145000 RPS<br>Пиковый: 450000 RPS  |
+|Поиск RPS                             |Средний: 10000 RPS<br>Пиковый: 40000 RPS    |
+|Загрузка плейлиста RPS                |Средний: 25000 RPS<br>Пиковый: 100000 RPS   |
+|Лайки RPS                             |Средний: 15000 RPS<br>Пиковый: 60000 RPS    |
+|Рекомендации RPS                      |Средний: 15000 RPS<br>Пиковый: 50000 RPS    |
+|Авторизация RPS                       |Средний: 500 RPS<br>Пиковый: 5000 RPS       |
+|Аудио стриминг RPS                    |Средний: 580000 RPS<br>Пиковый: 2000000 RPS |
+|Cache Hit Rate (CDN)                  |90-95% [16]                                 |
+|Доступность                           |99.999% [15]                                |
+|Кодеки                                |Ogg Vorbis и AAC                            |
 # Источники
 1. Анализ Spotify (SPOT). URL: [https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528](https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528)
 2. Spotify has 293 million premium subscribers. URL: [https://www.heise.de/en/news/Spotify-has-293-million-premium-subscribers-11275204.html?wt_mc=sm.red.ho.mastodon.mastodon.md_beitraege.md_beitraege&utm_source=mastodon#1](https://www.heise.de/en/news/Spotify-has-293-million-premium-subscribers-11275204.html?wt_mc=sm.red.ho.mastodon.mastodon.md_beitraege.md_beitraege&utm_source=mastodon#1)
@@ -118,7 +118,7 @@ Spotify достаточно сложная система:
 9. Spotify Statistics UK: 15.3M Subscribers, First Profit. URL: [https://songgifts.co.uk/blog/spotify-statistics/#sources_18](https://songgifts.co.uk/blog/spotify-statistics/#sources_18)
 10. Anna’s Archive releases massive 300TB Spotify music scrape. URL: [https://cyberinsider.com/annas-archive-releases-massive-300tb-spotify-music-scrape/#genesis-content#1](https://cyberinsider.com/annas-archive-releases-massive-300tb-spotify-music-scrape/#genesis-content#1)
 11. Spotify: Wie hoch ist der Datenverbrauch?. URL: [https://www.giga.de/tech/spotify-wie-hoch-ist-der-datenverbrauch--01J5QMXR2CW20T1F4R77CARQRN#doc-W7IJGiCPoL#1](https://www.giga.de/tech/spotify-wie-hoch-ist-der-datenverbrauch--01J5QMXR2CW20T1F4R77CARQRN#doc-W7IJGiCPoL#1)
-12. https://www.statspanda.com/live-counters/songs-streamed-on-spotify?source=counters_page. URL: [https://www.statspanda.com/live-counters/songs-streamed-on-spotify?source=counters_page](https://www.statspanda.com/live-counters/songs-streamed-on-spotify?source=counters_page)
+12. Songs Streamed on Spotify. URL: [https://www.statspanda.com/live-counters/songs-streamed-on-spotify?source=counters_page](https://www.statspanda.com/live-counters/songs-streamed-on-spotify?source=counters_page)
 13. Проектирование высоконагруженной системы: Музыкальный стриминговый сервис Spotify. URL: [https://github.com/Revachol/vk_highload_spotify](https://github.com/Revachol/vk_highload_spotify)
 14. Introducing cstar: The Spotify Cassandra orchestration tool, now open source. URL: [https://engineering.atspotify.com/2018/9/introducing-cstar-the-spotify-cassandra-orchestration-tool-now-open-source](https://engineering.atspotify.com/2018/9/introducing-cstar-the-spotify-cassandra-orchestration-tool-now-open-source)
 15. Designing Spotify. URL: [https://medium.com/@tejasd603/designing-spotify-a-10-minute-deep-dive-into-scalable-audio-streaming-architecture-8dec26d05a37#1](https://medium.com/@tejasd603/designing-spotify-a-10-minute-deep-dive-into-scalable-audio-streaming-architecture-8dec26d05a37#1)
