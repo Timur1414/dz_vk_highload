@@ -72,36 +72,40 @@ Spotify достаточно сложная система:
 
 # 2. Расчет нагрузки
 ## 2.1. Продуктовые метрики
-|Метрики|Значение|
-|-------|--------|
-|MAU    |761 млн. [2]|
-|DAU    |230 млн. [6]|
-|Премиум пользователи|293 млн. [2]|
-|Время прослушивания (на пользователя)|148 мин/день [9]|
-|Количество треков|86 млн. [10]|
-|Объём аудио|300 ТБ [10]|
-|Потребление данных (битрейт)|Обычное качество: 96 kbps [11]<br>Высокое качество: 160 kbps [11]|
-|Прослушивание треков|23 млрд. в день [12]|
-|Количество операций лайков|690 млн. в день [13]|
-|Количество поисковых запросов|690 млн. в день [13]|
+|Метрики                               |Значение                                                          |
+|--------------------------------------|------------------------------------------------------------------|
+|MAU                                   |761 млн. [2]                                                      |
+|DAU                                   |230 млн. [6]                                                      |
+|Премиум пользователи                  |293 млн. [2]                                                      |
+|Время прослушивания (на пользователя) |148 мин/день [9]                                                  |
+|Количество треков                     |86 млн. [10]                                                      |
+|Объём аудио (без учёта кодировок)     |300 ТБ [10]                                                       |
+|Потребление данных (битрейт)          |Обычное качество: 96 kbps [11]<br>Высокое качество: 160 kbps [11] |
+|Прослушивание треков                  |23 млрд. в день [12]                                              |
+|Количество операций лайков            |690 млн. в день [13]                                              |
+|Количество поисковых запросов         |690 млн. в день [13]                                              |
 ## 2.2. Технические метрики
 |Данные|Размер|
 |------|------|
-|Аудио||
-|Метаданные||
-|Плейлисты||
-|Обложки треков||
-|Задержка (воспроизведение)||
-|Задержка (API)||
-|История прослушивания||
-|API запросы||
-|Аудио стриминг||
+|Аудио общий объём (с учётом всех кодировок)|1 ПБ. [14]|
+|Метаданные|500 ТБ. [14]|
+|Плейлисты|500 ТБ. [14]|
+|Обложки треков|30 ТБ. [14]|
+|Задержка (воспроизведение)|200 мс. [15]|
+|Задержка обработки события воспроизведения|5 мс. [16]|
+|Задержка (API)|50 мс. [15]|
+|API запросы|11 млн. RPS [17]|
+|Пропускная способность общая|50 ГБ/с|
 |Прослушивание RPS|Средний: <br>Пиковый:|
 |Поиск RPS||
 |Загрузка плейлиста RPS||
 |Лайки RPS||
 |Рекомендации RPS||
 |Авторизация RPS||
+|что-то про кэш?||
+|Доступность||
+|Пропускная способность||
+|Кодеки||
 # Источники
 1. Анализ Spotify (SPOT). URL: [https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528](https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528)
 2. Spotify has 293 million premium subscribers. URL: [https://www.heise.de/en/news/Spotify-has-293-million-premium-subscribers-11275204.html?wt_mc=sm.red.ho.mastodon.mastodon.md_beitraege.md_beitraege&utm_source=mastodon#1](https://www.heise.de/en/news/Spotify-has-293-million-premium-subscribers-11275204.html?wt_mc=sm.red.ho.mastodon.mastodon.md_beitraege.md_beitraege&utm_source=mastodon#1)
@@ -116,3 +120,7 @@ Spotify достаточно сложная система:
 11. Spotify: Wie hoch ist der Datenverbrauch?. URL: [https://www.giga.de/tech/spotify-wie-hoch-ist-der-datenverbrauch--01J5QMXR2CW20T1F4R77CARQRN#doc-W7IJGiCPoL#1](https://www.giga.de/tech/spotify-wie-hoch-ist-der-datenverbrauch--01J5QMXR2CW20T1F4R77CARQRN#doc-W7IJGiCPoL#1)
 12. https://www.statspanda.com/live-counters/songs-streamed-on-spotify?source=counters_page. URL: [https://www.statspanda.com/live-counters/songs-streamed-on-spotify?source=counters_page](https://www.statspanda.com/live-counters/songs-streamed-on-spotify?source=counters_page)
 13. Проектирование высоконагруженной системы: Музыкальный стриминговый сервис Spotify. URL: [https://github.com/Revachol/vk_highload_spotify](https://github.com/Revachol/vk_highload_spotify)
+14. Introducing cstar: The Spotify Cassandra orchestration tool, now open source. URL: [https://engineering.atspotify.com/2018/9/introducing-cstar-the-spotify-cassandra-orchestration-tool-now-open-source](https://engineering.atspotify.com/2018/9/introducing-cstar-the-spotify-cassandra-orchestration-tool-now-open-source)
+15. Designing Spotify. URL: [https://medium.com/@tejasd603/designing-spotify-a-10-minute-deep-dive-into-scalable-audio-streaming-architecture-8dec26d05a37#1](https://medium.com/@tejasd603/designing-spotify-a-10-minute-deep-dive-into-scalable-audio-streaming-architecture-8dec26d05a37#1)
+16. Design Spotify. URL: [https://github.com/evgenyvinnik/llm-driven-system-design/blob/616faf31e2127167459ffed0f9e0f45e8980b506/spotify/architecture.md#1](https://github.com/evgenyvinnik/llm-driven-system-design/blob/616faf31e2127167459ffed0f9e0f45e8980b506/spotify/architecture.md#1)
+17. Spotify's Niklas Gustavsson on Scalability and Engineering Excellence. URL: [https://www.linkedin.com/posts/byndcode_interview-with-spotifys-chief-architect-activity-7441422475495698432-Y0Gu#1](https://www.linkedin.com/posts/byndcode_interview-with-spotifys-chief-architect-activity-7441422475495698432-Y0Gu#1)
