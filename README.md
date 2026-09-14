@@ -96,16 +96,16 @@ Spotify достаточно сложная система:
 |Задержка (API)|50 мс. [15]|
 |API запросы|11 млн. RPS [17]|
 |Пропускная способность общая|50 ГБ/с|
-|Прослушивание RPS|Средний: <br>Пиковый:|
-|Поиск RPS||
-|Загрузка плейлиста RPS||
-|Лайки RPS||
-|Рекомендации RPS||
-|Авторизация RPS||
-|что-то про кэш?||
-|Доступность||
-|Пропускная способность||
-|Кодеки||
+|Прослушивание RPS|Средний: 145000 RPS<br>Пиковый: 450000 RPS|
+|Поиск RPS|Средний: 10000 RPS<br>Пиковый: 40000 RPS|
+|Загрузка плейлиста RPS|Средний: 25000 RPS<br>Пиковый: 100000 RPS|
+|Лайки RPS|Средний: 15000 RPS<br>Пиковый: 60000 RPS|
+|Рекомендации RPS|Средний: 15000 RPS<br>Пиковый: 50000 RPS|
+|Авторизация RPS|Средний: 500 RPS<br>Пиковый: 5000 RPS|
+|Аудио стриминг RPS|Средний: 580000 RPS<br>Пиковый: 2000000 RPS|
+|Cache Hit Rate (CDN)|90-95% [16]|
+|Доступность|99.999% [15]|
+|Кодеки|Ogg Vorbis и AAC|
 # Источники
 1. Анализ Spotify (SPOT). URL: [https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528](https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528)
 2. Spotify has 293 million premium subscribers. URL: [https://www.heise.de/en/news/Spotify-has-293-million-premium-subscribers-11275204.html?wt_mc=sm.red.ho.mastodon.mastodon.md_beitraege.md_beitraege&utm_source=mastodon#1](https://www.heise.de/en/news/Spotify-has-293-million-premium-subscribers-11275204.html?wt_mc=sm.red.ho.mastodon.mastodon.md_beitraege.md_beitraege&utm_source=mastodon#1)
