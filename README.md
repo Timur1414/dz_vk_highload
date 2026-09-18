@@ -93,27 +93,35 @@ Spotify достаточно сложная система:
 Точной информации по операциям поиска у spotify нет, поэтому было выбрано значение, что пользователь в среднем совершает 3 поиска в день [6] => 
 количество поисковых запросов = DAU * 3 = 690 млн. в день.
 ## 2.2. Технические метрики
-|Данные                                |Размер                                      |
-|--------------------------------------|--------------------------------------------|
-|Объём аудио (с учётом всех кодировок) |1 ПБ. [14]                                  |
-|Метаданные                            |500 ТБ. [14]                                |
-|Плейлисты                             |500 ТБ. [14]                                |
-|Обложки треков                        |30 ТБ. [14]                                 |
-|Задержка воспроизведения нового трека |200 мс. [15]                                |
-|Задержка обработки события паузы      |5 мс. [!16]                                  |
-|Задержка API                          |50 мс. [15]                                 |
-|API запросы (всего)                   |11 млн. RPS [17]                            |
-|Общая пропускная способность          |50 ГБ/с                                     |
-|Прослушивания RPS                     |Средний: 145000 RPS<br>Пиковый: 450000 RPS  |
-|Поиск RPS                             |Средний: 8000 RPS<br>Пиковый: 24000 RPS     |
-|Загрузка плейлиста RPS                |Средний: 25000 RPS<br>Пиковый: 100000 RPS   |
-|Лайки RPS                             |Средний: 2500 RPS<br>Пиковый: 7500 RPS      |
-|Рекомендации RPS                      |Средний: 15000 RPS<br>Пиковый: 50000 RPS    |
-|Авторизация RPS                       |Средний: 500 RPS<br>Пиковый: 5000 RPS       |
-|Аудио стриминг RPS                    |Средний: 580000 RPS<br>Пиковый: 2000000 RPS |
-|Кодеки                                |Ogg Vorbis и AAC                            |
+|Данные                                |Размер                                       |
+|--------------------------------------|---------------------------------------------|
+|Объём аудио (с учётом всех кодировок) |1 ПБ. [14]                                   |
+|Метаданные                            |500 ТБ. [14]                                 |
+|Плейлисты                             |500 ТБ. [14]                                 |
+|Обложки треков                        |30 ТБ. [14]                                  |
+|Задержка воспроизведения нового трека |200 мс. [18]                                 |
+|Задержка обработки события паузы      |5 мс. [18]                                   |
+|Задержка API                          |50 мс. [18]                                  |
+|API запросы (всего)                   |11 млн. RPS [17]                             |
+|Общая пропускная способность          |50 ГБ/с [18]                                 |
+|Прослушивания RPS                     |Средний: 1000000 RPS<br>Пиковый: 3000000 RPS |
+|Поиск RPS                             |Средний: 8000 RPS<br>Пиковый: 24000 RPS      |
+|Загрузка плейлиста RPS                |Средний: 25000 RPS<br>Пиковый: 100000 RPS    |
+|Лайки RPS                             |Средний: 2500 RPS<br>Пиковый: 7500 RPS       |
+|Рекомендации RPS                      |Средний: 13000 RPS<br>Пиковый: 65000 RPS     |
+|Авторизация RPS                       |Средний: 500 RPS<br>Пиковый: 5000 RPS        |
+|!Аудио стриминг RPS                    |Средний: 580000 RPS<br>Пиковый: 2000000 RPS  |
+|Кодеки                                |Ogg Vorbis и AAC                             |
 
-Лайки RPS = 211 млн. / 86400 = 2500
+В среднем на прослушивание трека (длиной 3 минуты) возникает 8 API вызовов: 1 - старт трека, 1 - конец трека, каждые 30 секунд - пинг.
+Тогда RPS прослушивания = 11 млрд. * 8 / 86400 = 1 млн.
+
+Лайки RPS = 211 млн. / 86400 = 2500.
+
+Система рекомендаций в spotify разделена на 2 контура: мл занимается созданием плейлистов (миксы, радары новинок и т.д.) и сохраняет их в кэш;
+при просмотре домашней страницы сервис берёт предрассчитанные плейлисты из кэша.
+Каждый пользователь открывает домашнюю страницу примерно 5 раз в день => RPS рекомендаций (учитываются только обращения к предрассчитанному кэшу) = 
+DAU * 5 / 86400 = 13000.
 
 Поиск RPS - запросы от пользователя, которые ищут в бд треки по названию, артисту или плейлисту = 690 млн. / 86400 = 8000
 
@@ -134,7 +142,7 @@ Spotify достаточно сложная система:
 12. What 20 Years of Spotify Data Reveals About Our Listeners. URL: [https://newsroom.spotify.com/2026-04-23/spotify-20-data-listening-trends/?utm_source=chatgpt.com](https://newsroom.spotify.com/2026-04-23/spotify-20-data-listening-trends/?utm_source=chatgpt.com)
 13. . URL: []()
 14. Introducing cstar: The Spotify Cassandra orchestration tool, now open source. URL: [https://engineering.atspotify.com/2018/9/introducing-cstar-the-spotify-cassandra-orchestration-tool-now-open-source](https://engineering.atspotify.com/2018/9/introducing-cstar-the-spotify-cassandra-orchestration-tool-now-open-source)
-15. Designing Spotify. URL: [https://medium.com/@tejasd603/designing-spotify-a-10-minute-deep-dive-into-scalable-audio-streaming-architecture-8dec26d05a37#1](https://medium.com/@tejasd603/designing-spotify-a-10-minute-deep-dive-into-scalable-audio-streaming-architecture-8dec26d05a37#1)
+15. . URL: []()
 16. . URL: []()
 17. Spotify's Niklas Gustavsson on Scalability and Engineering Excellence. URL: [https://www.linkedin.com/posts/byndcode_interview-with-spotifys-chief-architect-activity-7441422475495698432-Y0Gu#1](https://www.linkedin.com/posts/byndcode_interview-with-spotifys-chief-architect-activity-7441422475495698432-Y0Gu#1)
 18. About Spotify. URL: [https://investors.spotify.com/about/?utm_source=chatgpt.com](https://investors.spotify.com/about/?utm_source=chatgpt.com)
