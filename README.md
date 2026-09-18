@@ -104,15 +104,22 @@ Spotify достаточно сложная система:
 |Задержка API                          |50 мс. [18]                                  |
 |API запросы (всего)                   |11 млн. RPS [17]                             |
 |Общая пропускная способность          |50 ГБ/с [18]                                 |
-|Прослушивания RPS                     |Средний: 1000000 RPS<br>Пиковый: 3000000 RPS |
-|Поиск RPS                             |Средний: 8000 RPS<br>Пиковый: 24000 RPS      |
-|Лайки RPS                             |Средний: 2500 RPS<br>Пиковый: 7500 RPS       |
-|Рекомендации RPS                      |Средний: 13000 RPS<br>Пиковый: 39000 RPS     |
-|Авторизация RPS                       |Средний: 500 RPS<br>Пиковый: 5000 RPS        |
 |Аудио стриминг                        |2.26 Тб/с                                    |
 |Кодеки                                |Ogg Vorbis и AAC                             |
 
-В среднем на прослушивание трека (длиной 3 минуты) возникает 8 API вызовов: 1 - старт трека, 1 - конец трека, каждые 30 секунд - пинг.
+Под аудио стримингом подразумевается раздача аудиофайлов через CDN. Данные отдаются чанками по 512 КБ. 
+Количество пользователей, слушающих одновременно = DAU * 148 * 60 / 86400 = 23.6 млн.
+Пропускная способность при битрейте 96 kbps = 23.6 млн. * 96 = 2.26 Тб/с
+
+|RPS           |Средний |Пиковый |
+|--------------|--------|--------|
+|Прослушивания |1000000 |3000000 |
+|Поиск         |8000    |24000   |
+|Лайки         |2500    |7500    |
+|Рекомендации  |13000   |39000   |
+|Авторизация   |500     |1500    |
+
+В среднем на прослушивание трека (длиной 3 минуты) возникает 8 API вызовов: 1 - старт трека, 1 - конец трека, каждые 30 секунд - пинг для статистики [13].
 Тогда RPS прослушивания = 11 млрд. * 8 / 86400 = 1 млн.
 
 Лайки RPS = 211 млн. / 86400 = 2500.
@@ -123,10 +130,6 @@ Spotify достаточно сложная система:
 DAU * 5 / 86400 = 13000.
 
 Поиск RPS - запросы от пользователя, которые ищут в бд треки по названию, артисту или плейлисту = 690 млн. / 86400 = 8000
-
-Под аудио стримингом подразумевается раздача аудиофайлов через CDN. Данные отдаются чанками по 512 КБ. 
-Количество пользователей, слушающих одновременно = DAU * 148 * 60 / 86400 = 23.6 млн.
-Пропускная способность при битрейте 96 kbps = 23.6 млн. * 96 = 2.26 Тб/с
 
 Так как точных данных пиковых значений нет, то выбран коэффициент пика = 3.
 Пиковый RPS = средний RPS * 3
@@ -143,7 +146,7 @@ DAU * 5 / 86400 = 13000.
 10. Anna’s Archive releases massive 300TB Spotify music scrape. URL: [https://cyberinsider.com/annas-archive-releases-massive-300tb-spotify-music-scrape/#genesis-content#1](https://cyberinsider.com/annas-archive-releases-massive-300tb-spotify-music-scrape/#genesis-content#1)
 11. Audio quality. URL: [https://support.spotify.com/us/article/audio-quality/?utm_source=chatgpt.com]([https://www.giga.de/tech/spotify-wie-hoch-ist-der-datenverbrauch--01J5QMXR2CW20T1F4R77CARQRN#doc-W7IJGiCPoL#1](https://support.spotify.com/us/article/audio-quality/?utm_source=chatgpt.com)
 12. What 20 Years of Spotify Data Reveals About Our Listeners. URL: [https://newsroom.spotify.com/2026-04-23/spotify-20-data-listening-trends/?utm_source=chatgpt.com](https://newsroom.spotify.com/2026-04-23/spotify-20-data-listening-trends/?utm_source=chatgpt.com)
-13. . URL: []()
+13. Artists deserve transparency about how music streaming works. URL: [https://loudandclear.byspotify.com/](https://loudandclear.byspotify.com/)
 14. Introducing cstar: The Spotify Cassandra orchestration tool, now open source. URL: [https://engineering.atspotify.com/2018/9/introducing-cstar-the-spotify-cassandra-orchestration-tool-now-open-source](https://engineering.atspotify.com/2018/9/introducing-cstar-the-spotify-cassandra-orchestration-tool-now-open-source)
 15. . URL: []()
 16. . URL: []()
