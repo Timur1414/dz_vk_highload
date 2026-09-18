@@ -109,7 +109,7 @@ Spotify достаточно сложная система:
 | Задержка API                          | 50 мс. [18]      |
 | API запросы (всего)                   | 11 млн. RPS [17] |
 | Общая пропускная способность          | 50 ГБ/с [18]     |
-| Аудио стриминг                        | 2.26 Тб/с        |
+| Аудио стриминг (CDN)                  | 2.26 Тб/с        |
 | Кодеки                                | Ogg Vorbis и AAC |
 
 Под аудио стримингом подразумевается раздача аудиофайлов через CDN. Данные отдаются чанками по 512 КБ [15]. 
@@ -131,7 +131,7 @@ Spotify достаточно сложная система:
 
 Система рекомендаций в Spotify разделена на 2 контура: мл занимается созданием плейлистов (миксы, радары новинок и т.д.) и сохраняет их в кэш;
 при просмотре домашней страницы сервис берёт предрассчитанные плейлисты из кэша [16].
-Каждый пользователь открывает домашнюю страницу примерно 5 раз в день ⇒ RPS рекомендаций (учитываются только обращения к предрассчитанному кэшу) = 
+Каждый пользователь открывает домашнюю страницу примерно 5 раз в день [20] ⇒ RPS рекомендаций (учитываются только обращения к предрассчитанному кэшу) = 
 DAU * 5 / 86400 = 13000.
 
 Поиск RPS - запросы от пользователя, которые ищут в бд треки по названию, артисту или плейлисту = 690 млн. / 86400 = 8000
@@ -158,3 +158,4 @@ DAU * 5 / 86400 = 13000.
 17. Spotify's Niklas Gustavsson on Scalability and Engineering Excellence. URL: [https://www.linkedin.com/posts/byndcode_interview-with-spotifys-chief-architect-activity-7441422475495698432-Y0Gu#1](https://www.linkedin.com/posts/byndcode_interview-with-spotifys-chief-architect-activity-7441422475495698432-Y0Gu#1)
 18. About Spotify. URL: [https://investors.spotify.com/about/?utm_source=chatgpt.com](https://investors.spotify.com/about/?utm_source=chatgpt.com)
 19. Yandex  Music Billion-Interactions Dataset. URL: [https://ya.ru/ai/papers/yandex-music-billion-interactions-dataset](https://ya.ru/ai/papers/yandex-music-billion-interactions-dataset)
+20. Understanding User Behavior in Spotify. URL: [https://www.researchgate.net/publication/261060359_Understanding_User_Behavior_in_Spotify]([https://hugoribeiro.com.br/biblioteca-digital/Zhung-Understanding_User_Behavior_in_Spotify.pdf](https://www.researchgate.net/publication/261060359_Understanding_User_Behavior_in_Spotify))
