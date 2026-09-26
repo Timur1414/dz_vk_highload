@@ -90,6 +90,7 @@ Spotify достаточно сложная система:
 | Премиум пользователи                  | 293 млн.                                                          |
 | Время прослушивания (на пользователя) | 148 мин/день [9]                                                  |
 | Количество треков                     | 100 млн. [18]                                                     |
+| Количество плейлистов                 | 4 млрд.                                                           |
 | Объём аудио (без учёта кодировок)     | 300 ТБ [10]                                                       |
 | Потребление данных (битрейт)          | Обычное качество: 96 kbps [11]<br>Высокое качество: 160 kbps [11] |
 | Прослушивание треков                  | 11 млрд. в день [12]                                              |
@@ -104,31 +105,37 @@ Spotify достаточно сложная система:
 Точной информации по операциям поиска у Spotify нет, поэтому было выбрано значение, что пользователь в среднем совершает 3 поиска в день [6] ⇒ 
 количество поисковых запросов = DAU * 3 = 690 млн. в день.
 ## 2.2. Технические метрики
-| Данные                                | Размер           |
-|---------------------------------------|------------------|
-| Объём аудио (с учётом всех кодировок) | 1 ПБ. [14]       |
-| Метаданные                            | 500 ТБ. [14]     |
-| Плейлисты                             | 500 ТБ. [14]     |
-| Обложки треков                        | 30 ТБ. [14]      |
-| Задержка воспроизведения нового трека | 200 мс. [18]     |
-| Задержка обработки события паузы      | 5 мс. [18]       |
-| Задержка API                          | 50 мс. [18]      |
-| API запросы (всего)                   | 11 млн. RPS [17] |
-| Общая пропускная способность          | 50 ГБ/с [18]     |
-| Аудио стриминг (CDN)                  | 2.26 Тб/с        |
-| Кодеки                                | Ogg Vorbis и AAC |
+| Данные                                        | Размер    | Формула                                                    |
+|-----------------------------------------------|-----------|------------------------------------------------------------|
+| Аудиофайлы (вместе с кодеками Ogg/AAC)        | 1 ПБ [14] | 100 млн. * 10 МБ                                           |
+| Обложки треков и альбомов                     | 30 ТБ     | 115 млн. * 250 КБ                                          |
+| Метаданные каталога (треки, альбомы, артисты) | 170 ГБ    | 100 млн. * 1.5КБ + 10 млн. * 1КБ + 5 млн. * 2КБ            |
+| Тексты песен (синхронизированные)             | 200 ГБ    | 100 млн. * 50% * 4 КБ                                      |
+| Плейлисты (коллекции, лайки)                  | 8.5 ТБ    | 1 ТБ (плейлисты) + 6 ТБ (связи с треками) + 1.5 ТБ (лайки) |
+| История прослушиваний                         | 0.6 ТБ    | 11 млрд. * 64 байт (в день)                                |
+
+Трек среднего размера со всеми кодировками занимает в среднем 10 МБ.
+Количество обложек = 10 млн. альбомов + 5 млн. артистов + 100 млн. плейлистов (менее 10% всех плейлистов имеют собственную обложку) = 115 млн.
+Синхронизированный текст занимает примерно 4 Кб.
+В среднем плейлист состоит из 40 треков.
+
+| Данные               | Средние  | Пиковые  |
+|----------------------|----------|----------|
+| Аудио стриминг (CDN) | 450 Гб/с | 900 Гб/с |
 
 Под аудио стримингом подразумевается раздача аудиофайлов через CDN. Данные отдаются чанками по 512 КБ [15]. 
 Количество пользователей, слушающих одновременно = DAU * 148 * 60 / 86400 = 23.6 млн.
-Пропускная способность при битрейте 96 kbps = 23.6 млн. * 96 = 2.26 Тб/с
+Пропускная способность при битрейте 96 kbps = 23.6 млн. * 96 = 2.26 Тб/с.
+Учитывая особенности музыкального стриминга (крайняя цикличность и офлайн-воспроизведение у премиум подписчиков), получается, что
+пропускная способность снижается до 2.26 Тб/с * (1 - 0.6 - 0.2) = 450 Гб/с
 
 | RPS           | Средний | Пиковый |
 |---------------|---------|---------|
-| Прослушивания | 1000000 | 3000000 |
-| Поиск         | 8000    | 24000   |
-| Лайки         | 2500    | 7500    |
-| Рекомендации  | 13000   | 39000   |
-| Авторизация   | 500     | 1500    |
+| Прослушивания | 1000000 | 2000000 |
+| Поиск         | 8000    | 16000   |
+| Лайки         | 2500    | 5000    |
+| Рекомендации  | 13000   | 26000   |
+| Авторизация   | 500     | 1000    |
 
 В среднем на прослушивание трека (длиной 3 минуты) возникает 8 API вызовов: 1 - старт трека, 1 - конец трека, каждые 30 секунд - пинг для статистики [13].
 Тогда RPS прослушивания = 11 млрд. * 8 / 86400 = 1 млн.
@@ -142,8 +149,8 @@ DAU * 5 / 86400 = 13000.
 
 Поиск RPS - запросы от пользователя, которые ищут в бд треки по названию, артисту или плейлисту = 690 млн. / 86400 = 8000
 
-Так как точных данных пиковых значений нет, то выбран коэффициент пика = 3.
-Пиковый RPS = средний RPS * 3
+Так как точных данных пиковых значений нет, то выбран коэффициент пика = 2.
+Пиковый RPS = средний RPS * 2
 
 # 3. Глобальная балансировка нагрузки
 В архитектуре Spotify используется четкое разделение между клиентским периметром и внутренней инфраструктурой сети [5]:
@@ -221,14 +228,14 @@ CDN сеть лучше не проектировать с нуля, а заку
 
 Запросы, связанные с биллингом, регистрацией и загрузкой новых треков выполняются только на кластерах в Европе и США. 
 
-| Тип запроса / Нагрузка         | Суммарно           | europe-west1 (14%) | europe-west4 (14%) | us-east1 (25%)    | us-central1 (24%) | asia-east1 (23%)  |                                                                                     
-|--------------------------------|--------------------|--------------------|--------------------|-------------------|-------------------|-------------------|                                                                                                                                                                          
-| API Прослушивания (сред./пик)  | 1000000 / 3000000  | 140000 / 420000    | 140000 / 420000    | 250000 / 750000   | 240000 / 720000   | 230000 / 690000   |                                                                                           
-| Поиск (сред./пик)              | 8000 / 24000       | 1120 / 3360        | 1120 / 3360        | 2000 / 6000       | 1920 / 5760       | 1840 / 5520       |                                                                                              
-| Рекомендации (сред./пик)       | 13000 / 39000      | 1820 / 5460        | 1820 / 5460        | 3250 / 9750       | 3120 / 9360       | 2990 / 8970       |                                                                                      
-| Лайки (сред./пик)              | 2500 / 7500        | 350 / 1050         | 350 / 1050         | 625 / 1875        | 600 / 1800        | 575 / 1725        |                                                                                                         
-| Авторизация (сред./пик)        | 500 / 1500         | 70 / 210           | 70 / 210           | 125 / 375         | 120 / 360         | 115 / 345         |                                                                                                                 
-| Стриминг аудио CDN (сред./пик) | 2.26 / 6.78 Тбит/с | 316 / 949 Гбит/с   | 316 / 949 Гбит/с   | 565 / 1695 Гбит/с | 542 / 1627 Гбит/с | 520 / 1560 Гбит/с |
+| Тип запроса / Нагрузка         | Суммарно          | europe-west1 (14%) | europe-west4 (14%) | us-east1 (25%)  | us-central1 (24%) | asia-east1 (23%) |                                                                                     
+|--------------------------------|-------------------|--------------------|--------------------|-----------------|-------------------|------------------|                                                                                                                                                                          
+| API Прослушивания (сред./пик)  | 1000000 / 2000000 | 140000 / 280000    | 140000 / 280000    | 250000 / 500000 | 240000 / 480000   | 230000 / 460000  |                                                                                           
+| Поиск (сред./пик)              | 8000 / 16000      | 1120 / 2240        | 1120 / 2240        | 2000 / 4000     | 1920 / 3840       | 1840 / 3680      |                                                                                              
+| Рекомендации (сред./пик)       | 13000 / 26000     | 1820 / 3640        | 1820 / 3640        | 3250 / 6500     | 3120 / 6240       | 2990 / 5980      |                                                                                      
+| Лайки (сред./пик)              | 2500 / 5000       | 350 / 700          | 350 / 700          | 625 / 1250      | 600 / 1200        | 575 / 1150       |                                                                                                         
+| Авторизация (сред./пик)        | 500 / 1000        | 70 / 140           | 70 / 140           | 125 / 250       | 120 / 240         | 115 / 230        |                                                                                                                 
+| Стриминг аудио CDN (сред./пик) | 450 / 900 Гб/с    | 63 / 126 Гбит/с    | 63 / 126 Гб/с      | 112 / 225 Гб/с  | 108 / 216 Гб/с    | 104 / 207 Гб/с   |
 
 ## 3.3. Схема DNS
 В Spotify архитектура DNS разделена на внешний контур (для клиентов) и внутренний контур (инфраструктурный DNS) [5].
@@ -243,14 +250,8 @@ GeoDNS, определяющий геопозицию пользователя �
 - Unbound - на каждом сервере запущен Unbound resolver. Это снижает сетевые задержки при поиске адресов сервисов практически до нуля (< 1 мс) и защищает авторитетные DNS-серверы от self-DDoS.
 - SRV - Spotify использовали не только A-записи, но и SRV, чтобы микросервисы могли искать друг друга.
 
-Client Error Reporting через DNS.
-
-Когда у мобильного клиента сломан или заблокирован HTTP/HTTPS, он может отправить отчет об ошибке в виде DNS запроса к специальному поддомену.
-
 ## 3.4. Схема Anycast
 Учитывая, что архитектура сильно связана с облачными провайдерами, то Anycast балансировку лучше отдать им.
-Для медиа - Anycast на стороне Multi-CDN.
-Для API - Anycast на стороне Google.
 
 ## 3.5. Регулирование трафика между дата-центрами
 Нативные приложения Spotify при старте сначала обращаются к микросервису apresolve.spotify.com, чтобы получить список доступных точек доступа с их весами.
@@ -267,7 +268,7 @@ Client Error Reporting через DNS.
 8. Spotify reveals when India tunes in: Gen Z and millennials shape daily music rituals. URL: [https://www.businesstoday.in/technology/news/story/spotify-reveals-when-india-tunes-in-gen-z-and-millennials-shape-daily-music-rituals-482131-2025-06-27?referral=yes&t_content=footerstrip-1&t_medium=web&t_psl=False&t_source=recengine#1](https://www.businesstoday.in/technology/news/story/spotify-reveals-when-india-tunes-in-gen-z-and-millennials-shape-daily-music-rituals-482131-2025-06-27?referral=yes&t_content=footerstrip-1&t_medium=web&t_psl=False&t_source=recengine#1)
 9. Spotify Statistics UK: 15.3M Subscribers, First Profit. URL: [https://songgifts.co.uk/blog/spotify-statistics/#sources_18](https://songgifts.co.uk/blog/spotify-statistics/#sources_18)
 10. Anna’s Archive releases massive 300TB Spotify music scrape. URL: [https://cyberinsider.com/annas-archive-releases-massive-300tb-spotify-music-scrape/#genesis-content#1](https://cyberinsider.com/annas-archive-releases-massive-300tb-spotify-music-scrape/#genesis-content#1)
-11. Audio quality. URL: [https://support.spotify.com/us/article/audio-quality/?utm_source=chatgpt.com]([https://www.giga.de/tech/spotify-wie-hoch-ist-der-datenverbrauch--01J5QMXR2CW20T1F4R77CARQRN#doc-W7IJGiCPoL#1](https://support.spotify.com/us/article/audio-quality/?utm_source=chatgpt.com)
+11. Audio quality. URL: [https://support.spotify.com/us/article/audio-quality/?utm_source=chatgpt.com](https://support.spotify.com/us/article/audio-quality/?utm_source=chatgpt.com)
 12. What 20 Years of Spotify Data Reveals About Our Listeners. URL: [https://newsroom.spotify.com/2026-04-23/spotify-20-data-listening-trends/?utm_source=chatgpt.com](https://newsroom.spotify.com/2026-04-23/spotify-20-data-listening-trends/?utm_source=chatgpt.com)
 13. Artists deserve transparency about how music streaming works. URL: [https://loudandclear.byspotify.com/](https://loudandclear.byspotify.com/)
 14. Introducing cstar: The Spotify Cassandra orchestration tool, now open source. URL: [https://engineering.atspotify.com/2018/9/introducing-cstar-the-spotify-cassandra-orchestration-tool-now-open-source](https://engineering.atspotify.com/2018/9/introducing-cstar-the-spotify-cassandra-orchestration-tool-now-open-source)
@@ -276,7 +277,7 @@ Client Error Reporting через DNS.
 17. Spotify's Niklas Gustavsson on Scalability and Engineering Excellence. URL: [https://www.linkedin.com/posts/byndcode_interview-with-spotifys-chief-architect-activity-7441422475495698432-Y0Gu#1](https://www.linkedin.com/posts/byndcode_interview-with-spotifys-chief-architect-activity-7441422475495698432-Y0Gu#1)
 18. About Spotify. URL: [https://investors.spotify.com/about/?utm_source=chatgpt.com](https://investors.spotify.com/about/?utm_source=chatgpt.com)
 19. Yandex  Music Billion-Interactions Dataset. URL: [https://ya.ru/ai/papers/yandex-music-billion-interactions-dataset](https://ya.ru/ai/papers/yandex-music-billion-interactions-dataset)
-20. Understanding User Behavior in Spotify. URL: [https://www.researchgate.net/publication/261060359_Understanding_User_Behavior_in_Spotify]([https://hugoribeiro.com.br/biblioteca-digital/Zhung-Understanding_User_Behavior_in_Spotify.pdf](https://www.researchgate.net/publication/261060359_Understanding_User_Behavior_in_Spotify))
+20. Understanding User Behavior in Spotify. URL: [https://www.researchgate.net/publication/261060359_Understanding_User_Behavior_in_Spotify](https://www.researchgate.net/publication/261060359_Understanding_User_Behavior_in_Spotify)
 21. SDN Internet Router – Part 2. URL: [https://engineering.atspotify.com/2016/1/sdn-internet-router-part-2?utm_source=chatgpt.com](https://engineering.atspotify.com/2016/1/sdn-internet-router-part-2?utm_source=chatgpt.com)
 22. Views From The Cloud: A History of Spotify’s Journey to the Cloud, Part 1. URL: [https://engineering.atspotify.com/2019/12/views-from-the-cloud-a-history-of-spotifys-journey-to-the-cloud-part-1-2?utm_source=chatgpt.com](https://engineering.atspotify.com/2019/12/views-from-the-cloud-a-history-of-spotifys-journey-to-the-cloud-part-1-2?utm_source=chatgpt.com)
 23. Fleet Management at Spotify (Part 2): The Path to Declarative Infrastructure. URL: [https://engineering.atspotify.com/2023/05/fleet-management-at-spotify-part-2-the-path-to-declarative-infrastructure?utm_source=chatgpt.com](https://engineering.atspotify.com/2023/05/fleet-management-at-spotify-part-2-the-path-to-declarative-infrastructure?utm_source=chatgpt.com)
