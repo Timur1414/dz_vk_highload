@@ -358,20 +358,6 @@ Score = -------------
 Работоспособность Nginx серверов проверяется через отдельный эндпоинт /healthz, который просто возвращает 200 ОК.
 Сервера HAProxy периодически проверяют работоспособность Nginx через этот эндпоинт. 
 
-## 4.3. Kubernetes
-
-| Сервис                  | Что делает                                    |
-|-------------------------|-----------------------------------------------|
-| AP-Resolve              | Определение оптимального ДЦ для клиента       |
-| Accounts Service        | Проверка авторизации и управление аккаунтами  |
-| Web Client              | SPA веб-версии плеера                         |
-| Playback Service        | Управление воспроизведением аудио             |
-| Search Service          | Поисковые запросы                             |
-| Recommendations Service | Сборка рекомендаций из предрассчитанного кэша |
-| Library Service         | Управление плейлистами, обработка лайков      |
-
-Nginx использует прямую маршрутизацию на IP-адреса подов. При создании новых под Nginx получает их IP из EndpointSlice. 
-
 # Источники
 1. Анализ Spotify (SPOT). URL: [https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528](https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528)
 2. Spotify has 293 million premium subscribers. URL: [https://www.heise.de/en/news/Spotify-has-293-million-premium-subscribers-11275204.html?wt_mc=sm.red.ho.mastodon.mastodon.md_beitraege.md_beitraege&utm_source=mastodon#1](https://www.heise.de/en/news/Spotify-has-293-million-premium-subscribers-11275204.html?wt_mc=sm.red.ho.mastodon.mastodon.md_beitraege.md_beitraege&utm_source=mastodon#1)
