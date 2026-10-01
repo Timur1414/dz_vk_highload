@@ -19,6 +19,8 @@
   - [3.4. Схема Anycast](#34-схема-anycast)
   - [3.5. Регулирование трафика между дата-центрами](#35-регулирование-трафика-между-дата-центрами-access-point-resolver)
 - [4. Локальная балансировка](#4-локальная-балансировка)
+  - [4.1 L4 балансировка](#41-l4-балансировка)
+  - [4.2 L7 балансировка](#42-l7-балансировка)
 - [Источники](#источники)
 
 # 1. Тема и целевая аудитория
@@ -285,18 +287,79 @@ Score = -------------
 
 # 4. Локальная балансировка
 
-## L4 балансировка
+## 4.1. L4 балансировка
 Для балансировки на L4 уровне выбран HAProxy. 
-Производительность одного сервера HAProxy:
+Характеристики одного сервера HAProxy:
 
 | Параметр                 | Значение   |
 |--------------------------|------------|
-| Максимум RPS             | 2 млн. RPS |
 | Максимум TCP соединений  | 1 млн.     |
 | Рабочий лимит соединений | 700 000    |
-| Алгоритм балансировки    | IP Hash    |
+| RAM                      | 64 ГБ      |
+| Алгоритм балансировки    | least_conn |
 
-## L7 балансировка
+Для поддержки 1 млн. TCP соединений потребуется примерно 64 ГБ RAM [25].
+
+Расчёт количества серверов HAProxy:
+
+Количество соединений глобально = 23.6 млн. чел. * 2 (HTTP2 с мультиплексированием в одно TCP соединение и WS соединение) = 50 млн. соединений.
+
+Тогда число HAProxy серверов вычисляется по формуле: (50 млн. * доля дц) / 700000
+
+| Дата-центр           | Доля | Количество соединений | Число HAProxy | +1 резерв |
+|----------------------|------|-----------------------|---------------|-----------|
+| europe-west1         | 14%  | 7 млн.                | 10            | 11        |
+| europe-west4         | 14%  | 7 млн.                | 10            | 11        |
+| us-east1             | 8%   | 4 млн.                | 6             | 7         |
+| us-central1          | 5%   | 2.5 млн.              | 4             | 5         |
+| us-west1             | 6%   | 3 млн.                | 5             | 6         |
+| southamerica-east1   | 12%  | 6 млн.                | 9             | 10        |
+| us-south1            | 9%   | 4.5 млн.              | 7             | 8         |
+| asia-south1          | 16%  | 8 млн.                | 12            | 13        |
+| asia-east1           | 12%  | 6 млн.                | 9             | 10        |
+| australia-southeast1 | 4%   | 2 млн.                | 3             | 4         |
+
+Всего 85 сервера HAProxy. 
+
+Все сервера с HAProxy шлют в сеть BGP UPDATE пакеты (при этом все сервера имеют один VIP). 
+Если сервер перестаёт работать, то граничный маршрутизатор дата-центра замечает отсутствие пакетов от этого сервера и вычёркивает его из таблицы маршрутизации.
+
+## 4.2. L7 балансировка
+
+Для L7 балансировки был выбран Nginx. Nginx поддерживает HTTP2, терминацию TLS, балансировку запросов, keepalive соединения и rate limiting.
+
+Характеристики одного сервера Nginx:
+
+| Параметр              | Значение   |
+|-----------------------|------------|
+| Максимум RPS          | 60000 RPS  |
+| Рабочий RPS           | 42000 RPS  |
+| RAM                   | 32 ГБ      |
+| Алгоритм балансировки | least_conn |
+
+Расчёт количества серверов Nginx:
+
+Суммарный пиковый RPS = 2062000 RPS.
+
+Тогда число Nginx серверов вычисляется по формуле: (2062000 * доля дц) / 42000
+
+| Дата-центр           | Доля | RPS    | Число Nginx | +1 резерв |
+|----------------------|------|--------|-------------|-----------|
+| europe-west1         | 14%  | 288680 | 7           | 8         |
+| europe-west4         | 14%  | 288680 | 7           | 8         |
+| us-east1             | 8%   | 164960 | 4           | 5         |
+| us-central1          | 5%   | 103100 | 3           | 4         |
+| us-west1             | 6%   | 123720 | 3           | 4         |
+| southamerica-east1   | 12%  | 247440 | 6           | 7         |
+| us-south1            | 9%   | 185580 | 5           | 6         |
+| asia-south1          | 16%  | 329920 | 8           | 9         |
+| asia-east1           | 12%  | 247440 | 6           | 7         |
+| australia-southeast1 | 4%   | 82480  | 2           | 3         |
+
+Всего 61 сервер Nginx.
+
+Работоспособность Nginx серверов проверяется через отдельный эндпоинт /healthz, который просто возвращает 200 ОК.
+Сервера HAProxy периодически проверяют работоспособность Nginx через этот эндпоинт. 
 
 # Источники
 1. Анализ Spotify (SPOT). URL: [https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528](https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528)
@@ -323,3 +386,4 @@ Score = -------------
 22. Views From The Cloud: A History of Spotify’s Journey to the Cloud, Part 1. URL: [https://engineering.atspotify.com/2019/12/views-from-the-cloud-a-history-of-spotifys-journey-to-the-cloud-part-1-2?utm_source=chatgpt.com](https://engineering.atspotify.com/2019/12/views-from-the-cloud-a-history-of-spotifys-journey-to-the-cloud-part-1-2?utm_source=chatgpt.com)
 23. Fleet Management at Spotify (Part 2): The Path to Declarative Infrastructure. URL: [https://engineering.atspotify.com/2023/05/fleet-management-at-spotify-part-2-the-path-to-declarative-infrastructure?utm_source=chatgpt.com](https://engineering.atspotify.com/2023/05/fleet-management-at-spotify-part-2-the-path-to-declarative-infrastructure?utm_source=chatgpt.com)
 24. How Spotify Aligned CDN Services for a Lightning Fast Streaming Experience. URL: [https://engineering.atspotify.com/2020/2/how-spotify-aligned-cdn-services-for-a-lightning-fast-streaming-experience?utm_source=chatgpt.com](https://engineering.atspotify.com/2020/2/how-spotify-aligned-cdn-services-for-a-lightning-fast-streaming-experience?utm_source=chatgpt.com)
+25. HAProxy Starter Guide. URL: [https://github.com/haproxy/haproxy/blob/master/doc/intro.txt](https://github.com/haproxy/haproxy/blob/master/doc/intro.txt)
