@@ -21,6 +21,13 @@
 - [4. Локальная балансировка](#4-локальная-балансировка)
   - [4.1 L4 балансировка](#41-l4-балансировка)
   - [4.2 L7 балансировка](#42-l7-балансировка)
+- [5. Логическая схема БД](#5-логическая-схема-бд)
+  - [5.1. Схема БД](#51-схема-бд)
+  - [5.2. Описание таблиц](#52-описание-таблиц)
+  - [5.3. Размеры данных](#53-размеры-данных)
+  - [5.4. Нагрузки на БД](#54-нагрузки-на-бд)
+  - [5.5. Требования к консистентности](#55-требования-к-консистентности)
+  - [5.6. Особенности распределения нагрузки](#56-особенности-распределения-нагрузки)
 - [Источники](#источники)
 
 # 1. Тема и целевая аудитория
@@ -357,6 +364,134 @@ Score = -------------
 
 Работоспособность Nginx серверов проверяется через отдельный эндпоинт /healthz, который просто возвращает 200 ОК.
 Сервера HAProxy периодически проверяют работоспособность Nginx через этот эндпоинт. 
+
+# 5. Логическая схема БД
+## 5.1. Схема БД
+
+```mermaid
+erDiagram
+  USER ||--o{ USER_MIX: "user_id"
+  USER_MIX ||--o{ USER_MIX_TRACKS: "mix_id"
+  TRACK ||--o{ USER_MIX_TRACKS: "track_id"
+  USER ||--o{ PLAYLIST: "user_id"
+  USER ||--o{ USER_TRACK_LIKES: "user_id"
+  USER ||--o{ PLAYBACK_HISTORY: "user_id"
+  ARTIST ||--o{ ALBUM_ARTISTS: "artist_id"
+  ALBUM ||--o{ ALBUM_ARTISTS: "album_id"
+  ARTIST ||--o{ TRACK_ARTISTS: "artist_id"
+  TRACK ||--o{ TRACK_ARTISTS: "track_id"
+  ALBUM ||--o{ TRACK: "album_id"
+  TRACK ||--o| TRACK_LYRICS: "track_id"
+  PLAYLIST ||--o{ PLAYLIST_TRACKS: "playlist_id"
+  TRACK ||--o{ PLAYLIST_TRACKS: "track_id"
+  TRACK ||--o{ USER_TRACK_LIKES: "track_id"
+  TRACK ||--o{ PLAYBACK_HISTORY: "track_id"
+
+  USER {
+    uuid id PK
+    text email UK
+    text password
+    text country
+    enum subscription_tier
+    boolean verified
+    timestamp created_at
+  }
+  ARTIST {
+    uuid id PK
+    text name UK
+    text cover_url
+    boolean verified
+    timestamp created_at
+  }
+  ALBUM {
+    uuid id PK
+    text title
+    text cover_url
+    enum album_type
+    integer tracks_count
+    timestamp created_at
+  }
+  ALBUM_ARTISTS {
+    uuid album_id PK, FK
+    uuid artist_id PK, FK
+  }
+  TRACK {
+    uuid id PK
+    uuid album_id FK
+    text title
+    integer duration_ms
+    boolean explicit
+    integer track_number
+    text isrc UK
+    text audio_s3_key
+    integer play_count
+    timestamp created_at
+  }
+  TRACK_ARTISTS {
+    uuid track_id PK, FK
+    uuid artist_id PK, FK
+  }
+  TRACK_LYRICS {
+    uuid track_id PK, FK
+    jsonb lines
+    timestamp created_at
+  }
+  PLAYLIST {
+    uuid id PK
+    uuid user_id FK
+    text title
+    text description
+    text cover_url
+    boolean is_public
+    boolean is_collaborative
+    integer tracks_count
+    timestamp created_at
+  }
+  PLAYLIST_TRACKS {
+    uuid playlist_id PK, FK
+    uuid track_id FK
+    integer position
+    timestamp added_at
+  }
+  USER_TRACK_LIKES {
+    uuid user_id PK, FK
+    uuid track_id PK, FK
+    timestamp liked_at
+  }
+  PLAYBACK_HISTORY {
+    uuid id PK
+    uuid user_id FK
+    uuid track_id FK
+    timestamp played_at
+    integer played_duration_ms
+    boolean completed
+  }
+  USER_MIX {
+    uuid id PK
+    uuid user_id FK
+    text title
+    text description
+    enum mix_type
+    text cover_url
+    timestamp created_at
+    timestamp expires_at
+  }
+  USER_MIX_TRACKS {
+    uuid mix_id PK, FK
+    uuid track_id PK, FK
+    integer position
+  }
+```
+
+## 5.2. Описание таблиц
+
+## 5.3. Размеры данных
+
+## 5.4. Нагрузки на БД
+
+## 5.5. Требования к консистентности
+
+## 5.6. Особенности распределения нагрузки
 
 # Источники
 1. Анализ Spotify (SPOT). URL: [https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528](https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528)
