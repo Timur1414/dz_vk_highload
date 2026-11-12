@@ -41,6 +41,7 @@
 - [9. Обеспечение надёжности](#9-обеспечение-надёжности)
   - [9.1. Резервирование компонентов](#91-резервирование-компонентов)
   - [9.2. Асинхронные паттерны взаимодействия сервисов](#92-асинхронные-паттерны-взаимодействия-сервисов)
+- [10. Схема проекта](#10-схема-проекта)
 - [Источники](#источники)
 
 # 1. Тема и целевая аудитория
@@ -995,8 +996,27 @@ Range: bytes=0-524287
 | Idempotent Consumer | Like_Service, Playback_Event_Processor_Service                                           | Чтобы исключить двойную обработку лайов, прослушиваний и прочих процессов, которые могут возникать в Kafka                                                            |
 | Saga (хореография)  | Media_Upload_Service, Audio_Transcoding_Worker, Catalog_Service                          | Создание трека - одна большая тразакция. Паттерн позволяет объединить транзакции из разных сервисов в одну логическую                                                 |
 
-[//]: # (Сервисы: AP Resolver Service, API Gateway, Auth Service, User Profile Service, Catalog Service, Playlist Service, Like Service, Audio Delivery Service, Playback Telemetry Service,)
-[//]: # (Playback Event Processor, Search Service, Recommendation Service, Recommendation Pipeline Worker, Media Upload Service, Audio Transcoding Worker Pool.)
+# 10. Схема проекта
+
+Сервисы:
+- AP_Resolver_Service - сервис, к которому обращается клиент при запуске или разрыве соединения. Возвращает список IP адресов для подключения.
+- Web_BFF - браузерный веб плеер. Агрегирует ответы бэкенд-сервисов и адаптирует payload под веб-клиент.
+- Desktop_BFF - агрегирует ответы бэкенд-сервисов и адаптирует payload под нативные приложения.
+- Auth_Service - идентификация, аутентификация и авторизация, генерация jwt.
+- User_Profile_Service - управление профилем и настройками.
+- Catalog_Service - управление треками, альбомами, артистами.
+- Playlist_Service - CRUD плейлистов и их треков.
+- Like_Service - добавление треков в "любимые треки".
+- Audio_Delivery_Service - отдача аудио клиенту при cache miss на CDN.
+- Playback_Telemetry_Service - пинг клиентского плеера.
+- Playback_Event_Processor_Service - обработчик собранной телеметрии.
+- Search_Service - полнотекстовый поиск треков, артистов и плейлистов.
+- Recommendation_Service - формирование персональных миксов на главном экране.
+- Recommendation_Pipeline_Worker - регулярное переобучение моделей для рекомендаций.
+- Media_Upload_Service - загрузка новых треков.
+- Audio_Transcoding_Worker - перекодирование аудио.
+
+Схема проекта: [miro](https://miro.com/app/board/uXjVEOvWkPM=/)
 
 # Источники
 1. Анализ Spotify (SPOT). URL: [https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528](https://longterminvestments.ru/spotify-analysis?ysclid=mtsg3ro0nb502972528)
